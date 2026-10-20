@@ -1,4 +1,4 @@
-# Afterglow
+# vibecodeMaxing
 
 A native macOS notch companion for long-running AI work. Start a timed session,
 close your MacBook, and let your local agents continue working.
@@ -10,8 +10,12 @@ and Swift 6+ to build. No third-party packages or full Xcode installation requir
 
 ```sh
 zsh scripts/build.sh
-open dist/Afterglow.app
+open dist/vibecodeMaxing.app
 ```
+
+The build includes the app icon in all standard macOS sizes and a vector menu-bar
+mark. Both are generated from the native vector artwork in
+`scripts/generate-icon.swift`; `dist/logo.png` provides a logo preview.
 
 The panel starts collapsed, flush with the top edge. Its height matches the
 built-in display's notch, with just 12 points added on either side. Click it to
@@ -52,7 +56,7 @@ or guarantee network connectivity. No token tracking or Telegram integration.
 
 ## Session guard
 
-The bundled `AfterglowGuard` runs with administrator authorization for the session.
+The bundled `vibecodeMaxingGuard` runs with administrator authorization for the session.
 It runs only the fixed `pmset` sleep-override commands. It holds an exclusive lock,
 validates the app's user and process start time, and watches an open lease file
 with private permissions. The app refreshes that lease each second.
@@ -83,8 +87,8 @@ The app never changes hibernation, display timers, standby, or network settings.
 ```sh
 zsh scripts/test.sh
 zsh scripts/build.sh
-dist/Afterglow.app/Contents/MacOS/Afterglow --snapshot "$PWD/dist/preview.png"
-dist/Afterglow.app/Contents/MacOS/Afterglow --snapshot "$PWD/dist/collapsed.png" --collapsed
+dist/vibecodeMaxing.app/Contents/MacOS/vibecodeMaxing --snapshot "$PWD/dist/preview.png"
+dist/vibecodeMaxing.app/Contents/MacOS/vibecodeMaxing --snapshot "$PWD/dist/collapsed.png" --collapsed
 ```
 
 Tests cover watchdog expiry, app loss, battery and thermal boundaries, command
@@ -98,7 +102,7 @@ running app to verify the actual glass material.
 ### Physical closed-lid check
 
 1. Disconnect external displays and power; charge above 20%.
-2. In Terminal, run `while true; do date; sleep 5; done > /tmp/afterglow-heartbeat.log`.
+2. In Terminal, run `while true; do date; sleep 5; done > /tmp/vibecodeMaxing-heartbeat.log`.
 3. Start a session and approve the macOS dialog. Confirm `pmset -g` reports
    `SleepDisabled 1` and the UI reports an active session.
 4. Close the lid for two minutes on a ventilated surface, then reopen it. Confirm

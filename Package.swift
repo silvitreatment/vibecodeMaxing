@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "Afterglow",
+    name: "vibecodeMaxing",
     platforms: [.macOS(.v14)],
     products: [
-        .executable(name: "Afterglow", targets: ["Afterglow"]),
-        .executable(name: "AfterglowGuard", targets: ["AfterglowGuard"])
+        .executable(name: "vibecodeMaxing", targets: ["Afterglow"]),
+        .executable(name: "vibecodeMaxingGuard", targets: ["AfterglowGuard"])
     ],
     targets: [
         .target(name: "AfterglowCore"),

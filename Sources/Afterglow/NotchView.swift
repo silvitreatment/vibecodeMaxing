@@ -76,9 +76,9 @@ struct NotchView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(model.expanded ? "Collapse Afterglow" : "Open Afterglow")
+        .accessibilityLabel(model.expanded ? "Collapse vibecodeMaxing" : "Open vibecodeMaxing")
         .accessibilityValue(model.expanded ? (model.battery.percent.map { "Battery: \($0)%" } ?? "Battery unavailable") : "")
-        .help(model.expanded ? (model.battery.percent.map { "Battery: \($0)%" } ?? "Battery unavailable") : "Open Afterglow")
+        .help(model.expanded ? (model.battery.percent.map { "Battery: \($0)%" } ?? "Battery unavailable") : "Open vibecodeMaxing")
     }
 
     private var batterySymbol: String {

@@ -84,7 +84,7 @@ public enum Command {
         process.waitUntilExit()
         let message = String(decoding: data, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
         guard process.terminationStatus == 0 else {
-            throw NSError(domain: "Afterglow", code: Int(process.terminationStatus),
+            throw NSError(domain: "vibecodeMaxing", code: Int(process.terminationStatus),
                           userInfo: [NSLocalizedDescriptionKey: message.isEmpty ? "Power command failed." : message])
         }
         return message

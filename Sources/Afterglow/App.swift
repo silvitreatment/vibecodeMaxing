@@ -9,7 +9,7 @@ final class NotchPanel: NSPanel {
 }
 
 @main
-enum AfterglowApp {
+enum VibecodeMaxingApp {
     @MainActor static func main() {
         let app = NSApplication.shared
         let delegate = AppDelegate()
@@ -31,7 +31,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var trackingMenus: Set<ObjectIdentifier> = []
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        let otherInstance = NSRunningApplication.runningApplications(withBundleIdentifier: "dev.afterglow.mac")
+        let otherInstance = NSRunningApplication.runningApplications(withBundleIdentifier: "dev.vibecodemaxing.mac")
             .contains { $0.processIdentifier != getpid() }
         if otherInstance && !CommandLine.arguments.contains("--snapshot") {
             NSApp.terminate(nil)
@@ -129,19 +129,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func updateMenu() {
-        statusItem.button?.image = NSImage(systemSymbolName: model.isActive ? "moon.stars.fill" : "moon.stars",
-                                          accessibilityDescription: "Afterglow")
+        if let logoURL = Bundle.main.url(forResource: "LogoMark", withExtension: "pdf"),
+           let logo = NSImage(contentsOf: logoURL) {
+            logo.size = NSSize(width: 18, height: 18)
+            logo.isTemplate = true
+            statusItem.button?.image = logo
+        } else {
+            statusItem.button?.image = NSImage(systemSymbolName: "sparkle", accessibilityDescription: "vibecodeMaxing")
+        }
+        statusItem.button?.toolTip = "vibecodeMaxing · \(model.isActive ? "Protecting your agents" : "Ready")"
         let menu = NSMenu()
-        menu.addItem(withTitle: "Afterglow · \(model.isActive ? "Protecting your agents" : "Ready")",
+        menu.addItem(withTitle: "vibecodeMaxing · \(model.isActive ? "Protecting your agents" : "Ready")",
                      action: nil, keyEquivalent: "")
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Show Afterglow", action: #selector(showPanel), keyEquivalent: "o").target = self
+        menu.addItem(withTitle: "Show vibecodeMaxing", action: #selector(showPanel), keyEquivalent: "o").target = self
         let toggle = menu.addItem(withTitle: model.isActive ? "End session" : "Start session",
                                   action: #selector(toggleSession), keyEquivalent: "")
         toggle.target = self
         toggle.isEnabled = !model.isBusy
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Quit Afterglow", action: #selector(quit), keyEquivalent: "q").target = self
+        menu.addItem(withTitle: "Quit vibecodeMaxing", action: #selector(quit), keyEquivalent: "q").target = self
         statusItem.menu = menu
         positionPanel(animated: model.expanded)
     }

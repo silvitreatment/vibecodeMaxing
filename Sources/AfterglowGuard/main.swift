@@ -72,7 +72,7 @@ func runGuard() throws {
     guard lockDescriptor >= 0 else { throw GuardFailure.invalid("Cannot create session lock.") }
     defer { close(lockDescriptor) }
     guard flock(lockDescriptor, LOCK_EX | LOCK_NB) == 0 else {
-        throw GuardFailure.invalid("Another Afterglow session is already running.")
+        throw GuardFailure.invalid("Another vibecodeMaxing session is already running.")
     }
     guard PowerState.sleepDisabled == false else {
         throw GuardFailure.invalid("Another app changed the sleep setting. Try again after stopping it.")
@@ -119,7 +119,7 @@ func runGuard() throws {
             break
         }
         if PowerState.sleepDisabled != true {
-            print("The sleep override changed outside Afterglow. Session ended.")
+            print("The sleep override changed outside vibecodeMaxing. Session ended.")
             break
         }
         Thread.sleep(forTimeInterval: 1)

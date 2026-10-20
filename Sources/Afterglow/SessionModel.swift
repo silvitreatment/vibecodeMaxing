@@ -67,10 +67,10 @@ final class SessionModel: ObservableObject {
             message = "Automatic screen locking is unavailable on this macOS version. Session cannot start."
             return
         }
-        let helper = Bundle.main.bundleURL.appendingPathComponent("Contents/Helpers/AfterglowGuard")
+        let helper = Bundle.main.bundleURL.appendingPathComponent("Contents/Helpers/vibecodeMaxingGuard")
         guard Bundle.main.bundleURL.pathExtension == "app",
               FileManager.default.isExecutableFile(atPath: helper.path) else {
-            message = "Build and open Afterglow.app to start a session."
+            message = "Build and open vibecodeMaxing.app to start a session."
             return
         }
         guard PowerState.sleepDisabled == false else {
@@ -82,7 +82,7 @@ final class SessionModel: ObservableObject {
             message = "Charge above 20% to start a session on battery."
             return
         }
-        let lease = FileManager.default.temporaryDirectory.appendingPathComponent("afterglow-\(UUID().uuidString).lease")
+        let lease = FileManager.default.temporaryDirectory.appendingPathComponent("vibecodeMaxing-\(UUID().uuidString).lease")
         guard FileManager.default.createFile(atPath: lease.path, contents: Data(),
                                             attributes: [.posixPermissions: 0o600]) else {
             message = "Could not create the session heartbeat."
@@ -91,7 +91,7 @@ final class SessionModel: ObservableObject {
         leaseURL = lease
         let command = [helper.path, String(getpid()), String(getuid()), lease.path, String(duration * 60)]
             .map(Command.shellQuote).joined(separator: " ")
-        let script = "with timeout of 30000 seconds\ndo shell script \(Command.appleScriptString(command)) with administrator privileges with prompt \(Command.appleScriptString("Afterglow needs permission to keep your Mac awake with its lid closed for this session."))\nend timeout"
+        let script = "with timeout of 30000 seconds\ndo shell script \(Command.appleScriptString(command)) with administrator privileges with prompt \(Command.appleScriptString("vibecodeMaxing needs permission to keep your Mac awake with its lid closed for this session."))\nend timeout"
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
         process.arguments = ["-e", script]
@@ -160,7 +160,7 @@ final class SessionModel: ObservableObject {
         if phase == .authorizing, authorization?.isRunning == true, PowerState.sleepDisabled == true {
             let result = IOPMAssertionCreateWithName(
                 kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
-                IOPMAssertionLevel(kIOPMAssertionLevelOn), "Afterglow agent session" as CFString, &assertion
+                IOPMAssertionLevel(kIOPMAssertionLevelOn), "vibecodeMaxing agent session" as CFString, &assertion
             )
             guard result == kIOReturnSuccess else {
                 message = "macOS refused the keep-awake assertion."
